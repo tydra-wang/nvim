@@ -29,7 +29,7 @@ local p = {
         },
         {
             "<leader>s",
-            "<cmd>Telescope lsp_document_symbols<cr>",
+            "<cmd>Telescope lsp_document_symbols symbol_width=60<cr>",
             desc = "find symbols in buffer",
         },
         {
