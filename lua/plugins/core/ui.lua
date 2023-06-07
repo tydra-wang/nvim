@@ -1,25 +1,4 @@
 return {
-    -- colorscheme
-    {
-        "navarasu/onedark.nvim",
-        -- config = function()
-        --     require("onedark").load()
-        -- end,
-    },
-
-    {
-        "catppuccin/nvim",
-        name = "catppuccin",
-        opts = {
-            integrations = {
-                illuminate = true,
-                -- barbecue = true,
-            },
-        },
-    },
-    { "EdenEast/nightfox.nvim" },
-    -- { "daschw/leaf.nvim" },
-
     -- indent
     {
         "nmac427/guess-indent.nvim",
@@ -77,23 +56,15 @@ return {
             },
         },
     },
+
     -- vscode-like winbar
     {
         "utilyre/barbecue.nvim",
-        name = "barbecue",
         version = "*",
         dependencies = {
             "SmiteshP/nvim-navic",
         },
-        opts = {
-            theme = "catppuccin",
-        },
-        -- config = true,
-        -- config = function()
-        --     require("barbecue").setup {
-        --         theme = "catppuccin",
-        --     }
-        -- end,
+        config = true,
     },
 
     {

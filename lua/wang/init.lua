@@ -1,9 +1,14 @@
 local M = {}
 
 function M.setup(opts)
+    if not opts then
+        opts = {}
+    end
+
+    -- raw neovim settings
     require "base"
 
-    -- load plugins
+    -- install lazy.nvim
     local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
     if not vim.loop.fs_stat(lazypath) then
         vim.fn.system {
@@ -17,6 +22,7 @@ function M.setup(opts)
     end
     vim.opt.rtp:prepend(lazypath)
 
+    -- core plugins
     local lazy_opts = {
         change_detection = {
             -- automatically check for config file changes and reload the ui
@@ -25,17 +31,20 @@ function M.setup(opts)
         },
         spec = {
             { import = "plugins.core" },
-            -- { import = "plugins.lang" },
         },
     }
 
+    -- local enabled plugins and extra plugins
     if opts and opts.spec then
         for _, spec in ipairs(opts.spec) do
             table.insert(lazy_opts.spec, spec)
         end
     end
+
     require("lazy").setup(lazy_opts)
-    vim.cmd.colorscheme "catppuccin"
+
+    local colorscheme = opts.colorscheme or "catppuccin"
+    vim.cmd.colorscheme(colorscheme)
 end
 
 return M
