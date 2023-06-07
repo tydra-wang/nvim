@@ -1,41 +1,3 @@
-local icons = {
-    Array = " ",
-    Boolean = " ",
-    Class = " ",
-    Color = " ",
-    Constant = " ",
-    Constructor = " ",
-    Copilot = " ",
-    Enum = " ",
-    EnumMember = " ",
-    Event = " ",
-    Field = " ",
-    File = " ",
-    Folder = " ",
-    Function = " ",
-    Interface = " ",
-    Key = " ",
-    Keyword = " ",
-    Method = " ",
-    Module = " ",
-    Namespace = " ",
-    Null = " ",
-    Number = " ",
-    Object = " ",
-    Operator = " ",
-    Package = " ",
-    Property = " ",
-    Reference = " ",
-    Snippet = " ",
-    String = " ",
-    Struct = " ",
-    Text = " ",
-    TypeParameter = " ",
-    Unit = " ",
-    Value = " ",
-    Variable = " ",
-}
-
 return {
     -- snippets
     {
@@ -90,7 +52,13 @@ return {
             "hrsh7th/cmp-cmdline",
             "hrsh7th/cmp-nvim-lua",
             "saadparwaiz1/cmp_luasnip",
-            "hrsh7th/cmp-nvim-lsp-signature-help",
+            -- icons
+            "onsails/lspkind.nvim",
+            -- function signature
+            {
+                "ray-x/lsp_signature.nvim",
+                config = true,
+            },
         },
         config = function()
             local cmp = require "cmp"
@@ -122,15 +90,9 @@ return {
                     { name = "buffer" },
                     { name = "path" },
                     { name = "nvim_lua" },
-                    { name = "nvim_lsp_signature_help" },
                 },
                 formatting = {
-                    format = function(_, item)
-                        if icons[item.kind] then
-                            item.kind = icons[item.kind] .. item.kind
-                        end
-                        return item
-                    end,
+                    format = require("lspkind").cmp_format {},
                 },
                 experimental = {
                     ghost_text = {
