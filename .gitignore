@@ -1,0 +1,6 @@
+.DS_Store
+lazy-lock.json
+
+# init.lua used for local settings
+/init.lua
+
