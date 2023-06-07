@@ -16,6 +16,7 @@ local p = {
                     -- prompt_position = "top",
                 },
             },
+            preview = false,
             sorting_strategy = "ascending",
             file_ignore_patterns = { "%.git/.*" },
         },
@@ -23,27 +24,32 @@ local p = {
     keys = {
         {
             "<leader>f",
-            "<cmd>Telescope find_files previewer=false<cr>",
+            "<cmd>Telescope find_files<cr>",
             desc = "find files",
         },
         {
+            "<leader>s",
+            "<cmd>Telescope lsp_document_symbols<cr>",
+            desc = "find symbols in buffer",
+        },
+        {
             "<leader><leader>",
-            "<cmd>Telescope oldfiles only_cwd=true previewer=false<cr>",
+            "<cmd>Telescope oldfiles only_cwd=true<cr>",
             desc = "find recent files",
         },
         {
             "<leader>b",
-            "<cmd>Telescope buffers previewer=false<cr>",
+            "<cmd>Telescope buffers<cr>",
             desc = "find buffers",
         },
         {
             "<leader>g",
-            "<cmd>Telescope live_grep<cr>",
+            "<cmd>Telescope live_grep preview=true<cr>",
             desc = "grep word in whole project",
         },
         {
             "<leader>d",
-            "<cmd>Telescope git_status<cr>",
+            "<cmd>Telescope git_status preview=true<cr>",
             desc = "git status",
         },
     },
