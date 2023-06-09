@@ -11,10 +11,11 @@ return {
     -- utils.setup_lspserver("golangci_lint_ls", {}),
 
     utils.add_null_ls_sources(
-        nls.builtins.formatting.goimports,
         -- nls.builtins.code_actions.gomodifytags,
         -- nls.builtins.code_actions.impl,
-        nls.builtins.diagnostics.golangci_lint
+        -- nls.builtins.formatting.gofumpt,
+        nls.builtins.diagnostics.golangci_lint,
+        nls.builtins.formatting.goimports
     ),
 
     {
