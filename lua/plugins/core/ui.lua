@@ -1,57 +1,4 @@
 return {
-    -- indent
-    {
-        "nmac427/guess-indent.nvim",
-        event = "BufReadPre",
-        config = function()
-            -- https://github.com/lukas-reineke/indent-blankline.nvim/issues/449
-            for _, keymap in pairs {
-                "zo",
-                "zO",
-                "zc",
-                "zC",
-                "za",
-                "zA",
-                "zv",
-                "zx",
-                "zX",
-                "zm",
-                "zM",
-                "zr",
-                "zR",
-            } do
-                vim.api.nvim_set_keymap(
-                    "n",
-                    keymap,
-                    keymap .. "<CMD>IndentBlanklineRefresh<CR>",
-                    { noremap = true, silent = true }
-                )
-            end
-        end,
-    },
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        event = { "BufReadPost", "BufNewFile" },
-        opts = {
-            filetype = {},
-        },
-    },
-
-    -- better quickfix
-    {
-        "kevinhwang91/nvim-bqf",
-        ft = "qf",
-        config = function()
-            vim.cmd [[ packadd cfilter ]]
-            require("bqf").setup {
-                preview = {
-                    auto_preview = false,
-                },
-            }
-        end,
-    },
-    { "yorickpeterse/nvim-pqf", config = true },
-
     -- smooth scroll
     { "karb94/neoscroll.nvim", event = "VeryLazy", config = true },
 
@@ -71,7 +18,6 @@ return {
             extensions = {
                 "nvim-tree",
                 "quickfix",
-                "symbols-outline",
                 "man",
                 "lazy",
                 "symbols-outline",
@@ -84,44 +30,10 @@ return {
     -- vscode-like winbar
     {
         "utilyre/barbecue.nvim",
-        version = "*",
+        event = "VeryLazy",
         dependencies = {
             "SmiteshP/nvim-navic",
         },
         config = true,
-    },
-
-    {
-        "folke/trouble.nvim",
-        cmd = { "TroubleToggle", "Trouble" },
-        opts = { use_diagnostic_signs = true },
-        keys = {
-            { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
-            { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
-            { "<leader>xl", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
-            { "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
-            {
-                "[d",
-                function()
-                    if require("trouble").is_open() then
-                        require("trouble").previous { skip_groups = true, jump = true }
-                    else
-                        vim.diagnostic.goto_prev()
-                    end
-                end,
-                desc = "Previous trouble/diagnostic item",
-            },
-            {
-                "]d",
-                function()
-                    if require("trouble").is_open() then
-                        require("trouble").next { skip_groups = true, jump = true }
-                    else
-                        vim.diagnostic.goto_next()
-                    end
-                end,
-                desc = "Next trouble/diagnostic item",
-            },
-        },
     },
 }

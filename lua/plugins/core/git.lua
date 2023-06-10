@@ -63,5 +63,8 @@ return {
         opts = {
             mappings = "<leader>y",
         },
+        keys = {
+            { "<leader>y", desc = "copy git link" },
+        },
     },
 }

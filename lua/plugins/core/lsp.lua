@@ -167,8 +167,8 @@ return {
             })
         end,
         keys = {
-            { "]]", desc = "Next Reference" },
-            { "[[", desc = "Prev Reference" },
+            { "]]", desc = "next reference" },
+            { "[[", desc = "prev reference" },
         },
     },
 }

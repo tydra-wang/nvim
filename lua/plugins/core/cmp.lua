@@ -1,4 +1,10 @@
 return {
+    {
+        "echasnovski/mini.pairs",
+        config = true,
+        event = "InsertEnter",
+    },
+
     -- snippets
     {
         "L3MON4D3/LuaSnip",
@@ -43,7 +49,6 @@ return {
     -- auto completion
     {
         "hrsh7th/nvim-cmp",
-        version = false, -- last release is way too old
         event = "InsertEnter",
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",

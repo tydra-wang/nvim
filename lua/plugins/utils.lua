@@ -4,7 +4,11 @@ function M.enable_indentline_for_filetype(ft)
     return {
         "lukas-reineke/indent-blankline.nvim",
         opts = function(_, opts)
-            table.insert(opts.filetype, ft)
+            if opts.filetype == nil then
+                opts.filetype = { ft }
+            else
+                table.insert(opts.filetype, ft)
+            end
         end,
     }
 end
