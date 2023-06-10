@@ -5,12 +5,6 @@ return {
         event = "InsertEnter",
     },
 
-    {
-        "echasnovski/mini.surround",
-        config = true,
-        keys = { "s" },
-    },
-
     -- snippets
     {
         "L3MON4D3/LuaSnip",

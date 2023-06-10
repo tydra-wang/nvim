@@ -1,28 +1,27 @@
-local p = {
-    "nvim-treesitter/nvim-treesitter",
-    event = { "BufReadPost", "BufNewFile" },
+return {
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        event = { "BufReadPost", "BufNewFile" },
+        config = function()
+            require("nvim-treesitter.configs").setup {
+                auto_install = true,
+                textobjects = {
+                    enable = true,
+                },
+                highlight = {
+                    enable = true,
+                },
+                indent = {
+                    enable = true,
+                },
+            }
+
+            -- enable folding
+            vim.opt.foldmethod = "expr"
+            vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+            -- without this, treesitter fold not work
+            vim.api.nvim_create_autocmd({ "BufEnter" }, { pattern = { "*" }, command = "normal zx" })
+        end,
+    },
 }
-
-function p.config()
-    require("nvim-treesitter.configs").setup {
-        -- TODO: how to use textobjects
-        textobjects = {
-            enable = true,
-        },
-        highlight = {
-            enable = true,
-        },
-        indent = {
-            enable = true,
-        },
-    }
-
-    -- enable folding
-    vim.opt.foldmethod = "expr"
-    vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-
-    -- without this, treesitter fold not work
-    vim.api.nvim_create_autocmd({ "BufEnter" }, { pattern = { "*" }, command = "normal zx" })
-end
-
-return p

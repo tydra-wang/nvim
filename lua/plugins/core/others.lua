@@ -2,23 +2,15 @@ return {
     { "folke/which-key.nvim", event = "VeryLazy" },
 
     {
-        "numToStr/Comment.nvim",
+        "echasnovski/mini.surround",
         config = true,
-        keys = { "gc" },
+        keys = { "s" },
     },
 
     {
-        "numToStr/FTerm.nvim",
+        "numToStr/Comment.nvim",
         config = true,
-        keys = {
-            {
-                "<Leader>t",
-                function()
-                    require("FTerm").toggle()
-                end,
-                desc = "toggle float terminal",
-            },
-        },
+        keys = { "gc" },
     },
 
     {
