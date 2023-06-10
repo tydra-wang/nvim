@@ -5,10 +5,10 @@ return {
         event = { "BufReadPost", "BufNewFile" },
         config = function()
             require("nvim-treesitter.configs").setup {
+                -- use default gitcommit highlight
+                ignore_install = { "gitcommit" },
+                -- automatically install missing parsers when entering buffer
                 auto_install = true,
-                textobjects = {
-                    enable = true,
-                },
                 highlight = {
                     enable = true,
                 },
