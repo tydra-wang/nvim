@@ -13,7 +13,11 @@ return {
         end,
     },
 
-    { "yorickpeterse/nvim-pqf", config = true },
+    {
+        "yorickpeterse/nvim-pqf",
+        config = true,
+        ft = { "qf" },
+    },
 
     {
         "folke/trouble.nvim",
@@ -25,7 +29,7 @@ return {
             { "<leader>xl", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
             { "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
             {
-                "[d",
+                "[t",
                 function()
                     if require("trouble").is_open() then
                         require("trouble").previous { skip_groups = true, jump = true }
@@ -36,7 +40,7 @@ return {
                 desc = "Previous trouble/diagnostic item",
             },
             {
-                "]d",
+                "]t",
                 function()
                     if require("trouble").is_open() then
                         require("trouble").next { skip_groups = true, jump = true }

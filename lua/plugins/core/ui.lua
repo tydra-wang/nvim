@@ -30,7 +30,6 @@ return {
     -- vscode-like winbar
     {
         "utilyre/barbecue.nvim",
-        event = "VeryLazy",
         dependencies = {
             "SmiteshP/nvim-navic",
         },
