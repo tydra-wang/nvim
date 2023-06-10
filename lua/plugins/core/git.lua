@@ -21,7 +21,7 @@ return {
                         gs.next_hunk()
                     end)
                     return "<Ignore>"
-                end, { expr = true, desc = "jump to next hunk" })
+                end, { expr = true, desc = "next change(git hunk)" })
 
                 map("n", "[c", function()
                     if vim.wo.diff then
@@ -31,7 +31,7 @@ return {
                         gs.prev_hunk()
                     end)
                     return "<Ignore>"
-                end, { expr = true, desc = "jump to previous hunk" })
+                end, { expr = true, desc = "prev change(git hunk)" })
 
                 -- Actions
                 map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>", { desc = "stage hunk" })

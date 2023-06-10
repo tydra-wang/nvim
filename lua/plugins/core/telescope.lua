@@ -47,11 +47,6 @@ local p = {
             "<cmd>Telescope live_grep preview=true<cr>",
             desc = "grep word in whole project",
         },
-        {
-            "<leader>d",
-            "<cmd>Telescope git_status preview=true<cr>",
-            desc = "git status",
-        },
     },
 }
 

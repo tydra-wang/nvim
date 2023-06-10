@@ -22,34 +22,68 @@ return {
     {
         "folke/trouble.nvim",
         cmd = { "TroubleToggle", "Trouble" },
-        opts = { use_diagnostic_signs = true },
+        opts = {
+            padding = false,
+            use_diagnostic_signs = true,
+            -- auto_preview = false,
+        },
         keys = {
-            { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
-            { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
-            { "<leader>xl", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
-            { "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
+            -- { "<leader>xx", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics (Trouble)" },
+            -- { "<leader>xX", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics (Trouble)" },
+            -- { "<leader>xl", "<cmd>TroubleToggle loclist<cr>", desc = "Location List (Trouble)" },
+            -- { "<leader>xq", "<cmd>TroubleToggle quickfix<cr>", desc = "Quickfix List (Trouble)" },
             {
-                "[t",
+                "<leader>q",
+                "<cmd>Trouble document_diagnostics<cr>",
+                desc = "open document diagnostics",
+            },
+            {
+                "gr",
+                "<cmd>Trouble lsp_references<cr>",
+                desc = "goto lsp references",
+            },
+            {
+                "gi",
+                "<cmd>Trouble lsp_implementations<cr>",
+                desc = "goto lsp implementation",
+            },
+            {
+                "[q",
                 function()
                     if require("trouble").is_open() then
                         require("trouble").previous { skip_groups = true, jump = true }
                     else
-                        vim.diagnostic.goto_prev()
+                        local ok, err = pcall(vim.cmd.cprev)
+                        if not ok then
+                            vim.notify(err, vim.log.levels.ERROR)
+                        end
                     end
                 end,
-                desc = "Previous trouble/diagnostic item",
+                desc = "previous Trouble/quickfix item",
             },
             {
-                "]t",
+                "]q",
                 function()
                     if require("trouble").is_open() then
                         require("trouble").next { skip_groups = true, jump = true }
                     else
-                        vim.diagnostic.goto_next()
+                        local ok, err = pcall(vim.cmd.cnext)
+                        if not ok then
+                            vim.notify(err, vim.log.levels.ERROR)
+                        end
                     end
                 end,
-                desc = "Next trouble/diagnostic item",
+                desc = "next Trouble/quickfix item",
             },
         },
+        init = function()
+            vim.api.nvim_create_autocmd("FileType", {
+                group = vim.api.nvim_create_augroup("wang_trouble.nvim", { clear = true }),
+                pattern = { "Trouble" },
+                callback = function()
+                    vim.opt_local.cursorline = true
+                end,
+            })
+        end,
     },
 }

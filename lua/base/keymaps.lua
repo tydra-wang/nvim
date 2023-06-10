@@ -18,6 +18,10 @@ vim.keymap.set("n", "<leader>n", "<C-6>", { desc = "last buffer" })
 vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "prev quickfix item" })
 vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "next quickfix item" })
 
+-- switch between diagnostics
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "prev diagnostic" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next diagnostic" })
+
 -- move cursor in insert mode
 vim.keymap.set("i", "<C-a>", "<Home>")
 vim.keymap.set("i", "<C-e>", "<End>")
