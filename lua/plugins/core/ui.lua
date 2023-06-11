@@ -33,9 +33,6 @@ return {
         dependencies = {
             "SmiteshP/nvim-navic",
         },
-        opts = {
-            -- do not show winbar in Trouble window
-            exclude_filetypes = { "trouble", "Trouble" },
-        },
+        config = true,
     },
 }
