@@ -30,9 +30,12 @@ return {
     -- vscode-like winbar
     {
         "utilyre/barbecue.nvim",
+        event = "VeryLazy",
         dependencies = {
             "SmiteshP/nvim-navic",
         },
-        config = true,
+        opts = {
+            exclude_filetypes = { "gitcommit" },
+        },
     },
 }

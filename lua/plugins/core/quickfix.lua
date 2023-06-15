@@ -80,8 +80,14 @@ return {
             vim.api.nvim_create_autocmd("FileType", {
                 group = vim.api.nvim_create_augroup("wang_trouble.nvim", { clear = true }),
                 pattern = { "Trouble" },
-                callback = function()
+                callback = function(event)
                     vim.opt_local.cursorline = true
+                    vim.keymap.set("n", "<c-n>", function()
+                        require("trouble").next { skip_groups = true, jump = false }
+                    end, { buffer = event.buf, silent = true })
+                    vim.keymap.set("n", "<c-p>", function()
+                        require("trouble").previous { skip_groups = true, jump = false }
+                    end, { buffer = event.buf, silent = true })
                 end,
             })
         end,
