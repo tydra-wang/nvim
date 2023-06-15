@@ -7,6 +7,20 @@ local p = {
             "nvim-telescope/telescope-fzf-native.nvim",
             build = "make",
         },
+        -- {
+        --     "ahmedkhalf/project.nvim",
+        --     opts = {
+        --         patterns = { ".git" },
+        --     },
+        --     event = "VeryLazy",
+        --     config = function(_, opts)
+        --         require("project_nvim").setup(opts)
+        --         require("telescope").load_extension "projects"
+        --     end,
+        --     keys = {
+        --         { "<leader>p", "<Cmd>Telescope projects<CR>", desc = "find projects" },
+        --     },
+        -- },
     },
     opts = {
         defaults = {

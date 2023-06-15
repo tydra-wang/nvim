@@ -62,7 +62,9 @@ return {
             -- function signature
             {
                 "ray-x/lsp_signature.nvim",
-                config = true,
+                opts = {
+                    hint_enable = false,
+                },
             },
         },
         config = function()
