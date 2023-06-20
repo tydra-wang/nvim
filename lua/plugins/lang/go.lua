@@ -11,8 +11,8 @@ return {
     utils.setup_lspserver("golangci_lint_ls", {}),
 
     utils.add_null_ls_sources(
-        -- nls.builtins.code_actions.gomodifytags,
-        -- nls.builtins.code_actions.impl,
+        nls.builtins.code_actions.gomodifytags,
+        nls.builtins.code_actions.impl,
         -- nls.builtins.formatting.gofumpt,
         -- nls.builtins.diagnostics.golangci_lint,
         nls.builtins.formatting.goimports
@@ -23,5 +23,20 @@ return {
         ft = { "go", "gomod" },
         opts = { tag_transform = "camelcase" },
         dependencies = { "ray-x/guihua.lua" },
+    },
+
+    {
+        "nvim-neotest/neotest",
+        dependencies = {
+            "nvim-neotest/neotest-go",
+        },
+        opts = {
+            adapters = {
+                ["neotest-go"] = {
+                    -- Here we can set options for neotest-go, e.g.
+                    -- args = { "-tags=integration" }
+                },
+            },
+        },
     },
 }

@@ -58,10 +58,7 @@ autocmd("RecordingLeave", {
 
 -- use q to close help/qf windows
 autocmd("FileType", {
-    pattern = {
-        "qf",
-        "help",
-    },
+    pattern = { "qf", "help" },
     callback = function(event)
         vim.bo[event.buf].buflisted = false
         vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
