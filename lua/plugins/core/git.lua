@@ -62,6 +62,23 @@ return {
         config = true,
         opts = {
             mappings = "<leader>y",
+            callbacks = {
+                ["gitlab.alibaba-inc.com"] = function(url_data)
+                    local url = "https://code.alibaba-inc.com/"
+                        .. url_data.repo
+                        .. "/blob/"
+                        .. url_data.rev
+                        .. "/"
+                        .. url_data.file
+                    if url_data.lstart then
+                        url = url .. "#L" .. url_data.lstart
+                        if url_data.lend then
+                            url = url .. "-L" .. url_data.lend
+                        end
+                    end
+                    return url
+                end,
+            },
         },
         keys = {
             { "<leader>y", desc = "copy git link" },
