@@ -16,11 +16,12 @@ return {
     {
         "yorickpeterse/nvim-pqf",
         config = true,
-        ft = { "qf" },
+        event = "VeryLazy",
     },
 
     {
         "folke/trouble.nvim",
+        optional = true,
         cmd = { "TroubleToggle", "Trouble" },
         opts = {
             padding = false,

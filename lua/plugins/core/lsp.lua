@@ -70,7 +70,11 @@ return {
             -- Global mappings
             -- See `:help vim.diagnostic.*` for documentation on any of the below functions
             vim.keymap.set("n", "<leader>o", vim.diagnostic.open_float, { desc = "show diagnostic" })
-            -- vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "open diagnostics to qf" })
+            vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "open diagnostics to qf" })
+
+            vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+                border = "rounded",
+            })
 
             -- Buffer mappings
             vim.api.nvim_create_autocmd("LspAttach", {
@@ -84,8 +88,8 @@ return {
                     end
                     map("n", "gd", vim.lsp.buf.definition, { desc = "lsp definition" })
                     map("n", "gD", vim.lsp.buf.declaration, { desc = "lsp declaration" })
-                    -- map("n", "gi", vim.lsp.buf.implementation, { desc = "lsp implementation" })
-                    -- map("n", "gr", vim.lsp.buf.references, { desc = "lsp references" })
+                    map("n", "gi", vim.lsp.buf.implementation, { desc = "lsp implementation" })
+                    map("n", "gr", vim.lsp.buf.references, { desc = "lsp references" })
                     map("n", "K", vim.lsp.buf.hover, { desc = "lsp hover" })
                     map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "lsp code action" })
                 end,
