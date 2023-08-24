@@ -2,6 +2,7 @@ return {
     {
         "lewis6991/gitsigns.nvim",
         event = { "BufReadPre", "BufNewFile" },
+        cmd = { "Gitsigns" },
         opts = {
             on_attach = function(bufnr)
                 local gs = package.loaded.gitsigns
@@ -83,5 +84,23 @@ return {
         keys = {
             { "<leader>y", desc = "copy git link" },
         },
+    },
+
+    -- { "akinsho/git-conflict.nvim", version = "*", config = true },
+
+    {
+        "sindrets/diffview.nvim",
+        cmd = { "DiffviewOpen" },
+    },
+
+    {
+        "NeogitOrg/neogit",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim",
+            "sindrets/diffview.nvim",
+        },
+        cmd = { "Neogit" },
+        config = true,
     },
 }

@@ -6,7 +6,6 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.expandtab = true
 opt.smartindent = true
-opt.foldlevelstart = 99
 opt.number = true
 opt.relativenumber = true
 opt.ignorecase = true
@@ -14,5 +13,8 @@ opt.smartcase = true
 opt.wrap = false
 opt.signcolumn = "yes"
 opt.clipboard = "unnamedplus"
-opt.cmdheight = 0
 opt.termguicolors = true
+
+-- https://github.com/neovim/neovim/issues/20380#issuecomment-1435384187
+opt.cmdheight = 0
+vim.opt.shortmess = "nocI"

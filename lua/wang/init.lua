@@ -36,9 +36,7 @@ function M.setup(opts)
 
     -- local enabled plugins and extra plugins
     if opts and opts.spec then
-        for _, spec in ipairs(opts.spec) do
-            table.insert(lazy_opts.spec, spec)
-        end
+        vim.list_extend(lazy_opts.spec, opts.spec)
     end
 
     require("lazy").setup(lazy_opts)
