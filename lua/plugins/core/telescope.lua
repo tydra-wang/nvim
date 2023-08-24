@@ -1,8 +1,13 @@
+local live_grep = function()
+    print(vim.opt.ignorecase)
+end
+
 local p = {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     dependencies = {
         "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope-live-grep-args.nvim",
         {
             "nvim-telescope/telescope-fzf-native.nvim",
             build = "make",
@@ -33,6 +38,15 @@ local p = {
             preview = false,
             sorting_strategy = "ascending",
             file_ignore_patterns = { "%.git/.*" },
+            -- vimgrep_arguments = {
+            --     "rg",
+            --     "--color=never",
+            --     "--no-heading",
+            --     "--with-filename",
+            --     "--line-number",
+            --     "--column",
+            --     -- "--smart-case",
+            -- },
         },
     },
     keys = {
@@ -68,6 +82,7 @@ function p.config()
     local telescope = require "telescope"
     telescope.setup(p.opts)
     telescope.load_extension "fzf"
+    telescope.load_extension "live_grep_args"
 end
 
 return p

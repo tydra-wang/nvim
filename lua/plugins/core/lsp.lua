@@ -19,7 +19,7 @@ return {
     -- cmdline tools and lsp servers
     {
         "williamboman/mason.nvim",
-        cmd = "Mason",
+        cmd = { "Mason", "MasonInstall" },
         opts = {
             ensure_installed = {
                 "codespell",
