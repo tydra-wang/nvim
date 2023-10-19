@@ -1,17 +1,15 @@
 require("wang").setup {
     -- add lazy.nvim plugin specs
     spec = {
-        -- use "ls -l lua/plugins/lang" to see all supported language
+        -- use "ls -l lua/plugins/lang" to see all supported languages
         -- install all language plugins
         -- { import = "plugins.lang" },
         -- install only golang plugins
         -- { import = "plugins.lang.go" },
 
-        -- use "ls -l lua/plugins/theme" to see all supported theme
+        -- use "ls -l lua/plugins/theme" to see all supported themes
         -- install all themes
         -- { import = "plugins.theme" },
-        -- install only catppuccin theme
-        { import = "plugins.theme.catppuccin" },
 
         -- add extra plugins
         -- {
@@ -26,7 +24,7 @@ require("wang").setup {
         -- },
     },
 
-    -- colorscheme = "catppuccin-latte",
+    -- colorscheme = "tokyonight",
 }
 
 -- overwrite some options

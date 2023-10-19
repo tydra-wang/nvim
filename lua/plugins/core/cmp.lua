@@ -49,6 +49,7 @@ return {
     -- auto completion
     {
         "hrsh7th/nvim-cmp",
+        version = false, -- last release is way too old
         event = "InsertEnter",
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
@@ -60,24 +61,21 @@ return {
             -- icons
             "onsails/lspkind.nvim",
             -- function signature
-            {
-                "ray-x/lsp_signature.nvim",
-                opts = {
-                    hint_enable = false,
-                },
-            },
+            -- {
+            --     "ray-x/lsp_signature.nvim",
+            --     opts = {
+            --         hint_enable = false,
+            --     },
+            -- },
         },
         config = function()
+            vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
             local cmp = require "cmp"
+            local defaults = require "cmp.config.default"()
             local opts = {
                 -- completion = {
                 --     completeopt = "menu,menuone,noinsert",
                 -- },
-                window = {
-                    completion = cmp.config.window.bordered(),
-                    documentation = cmp.config.window.bordered(),
-                },
-                preselect = "none",
                 snippet = {
                     expand = function(args)
                         require("luasnip").lsp_expand(args.body)
@@ -95,6 +93,11 @@ return {
                         select = true,
                     }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 },
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
+                },
+                -- preselect = "none",
                 sources = cmp.config.sources {
                     { name = "nvim_lsp" },
                     { name = "luasnip" },
@@ -110,6 +113,7 @@ return {
                         hl_group = "LspCodeLens",
                     },
                 },
+                sorting = defaults.sorting,
             }
             cmp.setup(opts)
 

@@ -92,6 +92,7 @@ return {
                     map("n", "gr", vim.lsp.buf.references, { desc = "lsp references" })
                     map("n", "K", vim.lsp.buf.hover, { desc = "lsp hover" })
                     map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "lsp code action" })
+                    map("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "signature help" })
                 end,
             })
 

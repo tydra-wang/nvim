@@ -5,7 +5,7 @@ function M.setup(opts)
         opts = {}
     end
 
-    -- raw neovim settings
+    -- raw neovim settings without any plugins
     require "base"
 
     -- install lazy.nvim
@@ -22,7 +22,7 @@ function M.setup(opts)
     end
     vim.opt.rtp:prepend(lazypath)
 
-    -- core plugins
+    -- load core plugins
     local lazy_opts = {
         change_detection = {
             -- automatically check for config file changes and reload the ui
@@ -31,11 +31,16 @@ function M.setup(opts)
         },
         spec = {
             { import = "plugins.core" },
+            -- default theme
+            { import = "plugins.theme.catppuccin" },
+        },
+        ui = {
+            border = "single",
         },
     }
 
     -- local enabled plugins and extra plugins
-    if opts and opts.spec then
+    if opts.spec then
         vim.list_extend(lazy_opts.spec, opts.spec)
     end
 
