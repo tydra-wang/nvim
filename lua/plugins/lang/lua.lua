@@ -2,7 +2,6 @@ local utils = require "plugins.utils"
 local nls = require "null-ls"
 
 return {
-    utils.enable_indentline_for_filetype "lua",
     utils.mason_ensure_install("lua-language-server", "stylua"),
     utils.add_null_ls_sources(nls.builtins.formatting.stylua),
 

@@ -1,15 +1,5 @@
 local M = {}
 
-function M.enable_indentline_for_filetype(ft)
-    return {
-        "lukas-reineke/indent-blankline.nvim",
-        opts = function(_, opts)
-            opts.filetype = opts.filetype or {}
-            table.insert(opts.filetype, ft)
-        end,
-    }
-end
-
 function M.mason_ensure_install(...)
     local packages = { ... }
     return {
