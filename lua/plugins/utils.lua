@@ -44,7 +44,18 @@ function M.setup_formatters_by_ft(filetype, formatters)
         "stevearc/conform.nvim",
         opts = {
             formatters_by_ft = {
-                [filetype] = { formatters },
+                [filetype] = formatters,
+            },
+        },
+    }
+end
+
+function M.setup_linters_by_ft(filetype, linters)
+    return {
+        "mfussenegger/nvim-lint",
+        opts = {
+            linters_by_ft = {
+                [filetype] = linters,
             },
         },
     }

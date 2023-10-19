@@ -97,16 +97,15 @@ return {
     -- null-ls
     {
         "jose-elias-alvarez/null-ls.nvim",
-        event = { "BufReadPre", "BufNewFile" },
-        dependencies = "williamboman/mason.nvim",
-        opts = function()
-            local nls = require "null-ls"
-            return {
-                sources = {
-                    nls.builtins.diagnostics.codespell,
-                },
-            }
-        end,
+        event = { "BufReadPost", "BufNewFile" },
+        -- opts = function()
+        --     local nls = require "null-ls"
+        --     return {
+        --         sources = {
+        --             -- nls.builtins.diagnostics.codespell,
+        --         },
+        --     }
+        -- end,
     },
 
     {
@@ -148,7 +147,7 @@ return {
 
     {
         "stevearc/conform.nvim",
-        event = "VeryLazy",
+        event = { "BufReadPost", "BufNewFile" },
         config = function(_, opts)
             require("conform").setup(opts)
             local format_on_save = true
@@ -173,6 +172,18 @@ return {
                     if format_on_save then
                         format_file(args.bufnr)
                     end
+                end,
+            })
+        end,
+    },
+    {
+        "mfussenegger/nvim-lint",
+        event = { "BufReadPost", "BufNewFile" },
+        config = function(_, opts)
+            require("lint").linters_by_ft = opts.linters_by_ft or {}
+            vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+                callback = function()
+                    require("lint").try_lint()
                 end,
             })
         end,

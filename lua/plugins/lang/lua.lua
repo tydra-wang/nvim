@@ -2,7 +2,7 @@ local utils = require "plugins.utils"
 
 return {
     utils.mason_ensure_install("lua-language-server", "stylua"),
-    utils.setup_formatters_by_ft("lua", "stylua"),
+    utils.setup_formatters_by_ft("lua", { "stylua" }),
 
     utils.setup_lspserver("lua_ls", function()
         -- copy from lsp-zero nvim_workspace settings
