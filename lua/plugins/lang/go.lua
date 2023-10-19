@@ -13,9 +13,11 @@ return {
         nls.builtins.code_actions.gomodifytags,
         nls.builtins.code_actions.impl,
         -- nls.builtins.formatting.gofumpt,
-        nls.builtins.diagnostics.golangci_lint,
-        nls.builtins.formatting.goimports
+        nls.builtins.diagnostics.golangci_lint
+        -- nls.builtins.formatting.goimports
     ),
+
+    utils.setup_formatters_by_ft("go", "goimports-reviser"),
 
     {
         "ray-x/go.nvim",

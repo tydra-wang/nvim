@@ -1,9 +1,8 @@
 local utils = require "plugins.utils"
-local nls = require "null-ls"
 
 return {
     utils.mason_ensure_install("lua-language-server", "stylua"),
-    utils.add_null_ls_sources(nls.builtins.formatting.stylua),
+    utils.setup_formatters_by_ft("lua", "stylua"),
 
     utils.setup_lspserver("lua_ls", function()
         -- copy from lsp-zero nvim_workspace settings

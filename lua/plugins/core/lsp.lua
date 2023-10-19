@@ -1,20 +1,3 @@
--- format on save
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-local format_on_save = true
-local toggle_format_on_save = function()
-    format_on_save = not format_on_save
-end
-
-local nls_format = function(bufnr)
-    vim.lsp.buf.format {
-        bufnr = bufnr,
-        sync = true,
-        filter = function(client)
-            return client.name == "null-ls"
-        end,
-    }
-end
-
 return {
     -- cmdline tools and lsp servers
     {
@@ -57,12 +40,6 @@ return {
             },
         },
         config = function(_, opts)
-            vim.api.nvim_create_user_command("LspFormat", function()
-                nls_format()
-            end, {})
-            vim.api.nvim_create_user_command("LspFormatOnSaveToggle", function()
-                toggle_format_on_save()
-            end, {})
             vim.api.nvim_create_user_command("LspRename", function()
                 vim.lsp.buf.rename()
             end, {})
@@ -128,20 +105,6 @@ return {
                 sources = {
                     nls.builtins.diagnostics.codespell,
                 },
-                on_attach = function(client, bufnr)
-                    if client.supports_method "textDocument/formatting" then
-                        vim.api.nvim_clear_autocmds { group = augroup, buffer = bufnr }
-                        vim.api.nvim_create_autocmd("BufWritePre", {
-                            group = augroup,
-                            buffer = bufnr,
-                            callback = function()
-                                if format_on_save then
-                                    nls_format(bufnr)
-                                end
-                            end,
-                        })
-                    end
-                end,
             }
         end,
     },
@@ -181,5 +144,37 @@ return {
             { "]r", desc = "next reference" },
             { "[r", desc = "prev reference" },
         },
+    },
+
+    {
+        "stevearc/conform.nvim",
+        event = "VeryLazy",
+        config = function(_, opts)
+            require("conform").setup(opts)
+            local format_on_save = true
+            local toggle_format_on_save = function()
+                format_on_save = not format_on_save
+            end
+            local format_file = function(bufnr)
+                require("conform").format {
+                    bufnr = bufnr,
+                    lsp_fallback = true,
+                }
+            end
+            vim.api.nvim_create_user_command("Format", function()
+                format_file()
+            end, {})
+            vim.api.nvim_create_user_command("FormatOnSaveToggle", function()
+                toggle_format_on_save()
+            end, {})
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                pattern = "*",
+                callback = function(args)
+                    if format_on_save then
+                        format_file(args.bufnr)
+                    end
+                end,
+            })
+        end,
     },
 }

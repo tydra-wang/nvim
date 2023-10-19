@@ -10,7 +10,6 @@ return {
         event = { "BufReadPost", "BufNewFile" },
         main = "ibl",
         opts = {
-            enabled = false,
             scope = { enabled = false },
         },
     },

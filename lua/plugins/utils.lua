@@ -39,6 +39,17 @@ function M.add_null_ls_sources(...)
     }
 end
 
+function M.setup_formatters_by_ft(filetype, formatters)
+    return {
+        "stevearc/conform.nvim",
+        opts = {
+            formatters_by_ft = {
+                [filetype] = { formatters },
+            },
+        },
+    }
+end
+
 function M.telescope_ignore_pattern(...)
     local patterns = { ... }
     return {
