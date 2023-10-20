@@ -180,10 +180,13 @@ return {
         "mfussenegger/nvim-lint",
         event = { "BufReadPost", "BufNewFile" },
         config = function(_, opts)
-            require("lint").linters_by_ft = opts.linters_by_ft or {}
-            vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+            local lint = require "lint"
+            lint.linters_by_ft = opts.linters_by_ft or {}
+            vim.api.nvim_create_autocmd({ "InsertLeave", "BufWrite", "BufRead" }, {
+                group = vim.api.nvim_create_augroup("lint", { clear = true }),
                 callback = function()
-                    require("lint").try_lint()
+                    lint.try_lint()
+                    lint.try_lint "codespell"
                 end,
             })
         end,

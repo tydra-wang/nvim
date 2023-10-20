@@ -3,15 +3,10 @@ local utils = require "plugins.utils"
 
 return {
     utils.telescope_ignore_pattern("go.sum", "vendor/.*"),
-
     utils.mason_ensure_install("gopls", "goimports", "gofumpt", "golangci-lint-langserver", "gomodifytags", "impl"),
-
     utils.setup_lspserver("gopls", {}),
-
     -- utils.add_null_ls_sources(nls.builtins.code_actions.gomodifytags, nls.builtins.code_actions.impl),
-
     utils.setup_formatters_by_ft("go", { "goimports" }),
-
     utils.setup_linters_by_ft("go", { "golangcilint" }),
 
     {
