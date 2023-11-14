@@ -2,7 +2,7 @@ local utils = require "plugins.utils"
 -- local nls = require "null-ls"
 
 return {
-    utils.telescope_ignore_pattern("go.sum", "vendor/.*"),
+    utils.telescope_ignore_pattern("go.sum", "vendor/.*", "/opt/homebrew/Cellar/go/.*"),
     utils.mason_ensure_install("gopls", "goimports", "gofumpt", "golangci-lint-langserver", "gomodifytags", "impl"),
     utils.setup_lspserver("gopls", {}),
     -- utils.add_null_ls_sources(nls.builtins.code_actions.gomodifytags, nls.builtins.code_actions.impl),
