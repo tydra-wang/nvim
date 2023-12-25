@@ -1,6 +1,9 @@
+local leet_arg = "leetcode.nvim"
+
 return {
     "kawre/leetcode.nvim",
     build = ":TSUpdate html",
+    lazy = leet_arg ~= vim.fn.argv()[1],
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
         "nvim-telescope/telescope.nvim",
@@ -13,14 +16,13 @@ return {
     },
     opts = {
         lang = "golang",
+        arg = leet_arg,
+        cn = { -- leetcode.cn
+            enabled = true, ---@type boolean
+            -- translate_problems = false, ---@type boolean
+        },
     },
-    config = function(_, opts)
-        vim.keymap.set("n", "<leader>lq", "<cmd>LcQuestionTabs<cr>")
-        vim.keymap.set("n", "<leader>lm", "<cmd>LcMenu<cr>")
-        vim.keymap.set("n", "<leader>lc", "<cmd>LcConsole<cr>")
-        vim.keymap.set("n", "<leader>ll", "<cmd>LcLanguage<cr>")
-        vim.keymap.set("n", "<leader>ld", "<cmd>LcDescriptionToggle<cr>")
-
-        require("leetcode").setup(opts)
-    end,
+    -- config = function(_, opts)
+    --     require("leetcode").setup(opts)
+    -- end,
 }
