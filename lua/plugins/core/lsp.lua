@@ -79,16 +79,8 @@ return {
                 require("cmp_nvim_lsp").default_capabilities()
             )
 
-            -- fix clangd conflict with null-ls
-            -- see https://github.com/jose-elias-alvarez/null-ls.nvim/issues/428#issuecomment-997234900
-            capabilities.offsetEncoding = { "utf-16" }
-
-            local servers = opts.servers
-            for server in pairs(servers) do
-                local server_opts = {
-                    settings = servers[server],
-                    capabilities = vim.deepcopy(capabilities),
-                }
+            for server, server_opts in pairs(opts.servers) do
+                server_opts.capabilities = capabilities
                 require("lspconfig")[server].setup(server_opts)
             end
         end,

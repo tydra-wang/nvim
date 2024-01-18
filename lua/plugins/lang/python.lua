@@ -5,11 +5,13 @@ return {
     utils.setup_formatters_by_ft("python", { "black" }),
 
     utils.setup_lspserver("pylsp", {
-        -- https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
-        pylsp = {
-            plugins = {
-                pycodestyle = {
-                    maxLineLength = 100,
+        settings = {
+            -- https://github.com/python-lsp/python-lsp-server/blob/develop/CONFIGURATION.md
+            pylsp = {
+                plugins = {
+                    pycodestyle = {
+                        maxLineLength = 100,
+                    },
                 },
             },
         },
