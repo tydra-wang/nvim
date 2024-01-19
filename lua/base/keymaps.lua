@@ -14,9 +14,26 @@ vim.keymap.set("n", "<C-k>", "<C-w>k")
 -- switch between buffers
 vim.keymap.set("n", "<leader>n", "<C-6>", { desc = "last buffer" })
 
--- switch between quickfix items
-vim.keymap.set("n", "[q", vim.cmd.cprev, { desc = "prev quickfix item" })
-vim.keymap.set("n", "]q", vim.cmd.cnext, { desc = "next quickfix item" })
+local function next_issue()
+    local loclist_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
+    if loclist_open then
+        vim.cmd.lnext()
+    else
+        vim.cmd.cnext()
+    end
+end
+
+local function prev_issue()
+    local loclist_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
+    if loclist_open then
+        vim.cmd.lprev()
+    else
+        vim.cmd.cprev()
+    end
+end
+
+vim.keymap.set("n", "]q", next_issue, { noremap = true, silent = true, desc = "next locallist/quickfix item" })
+vim.keymap.set("n", "[q", prev_issue, { noremap = true, silent = true, desc = "prev locallist/quickfix item" })
 
 -- switch between diagnostics
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "prev diagnostic" })
