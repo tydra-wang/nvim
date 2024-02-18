@@ -10,7 +10,9 @@ return {
     }),
     -- utils.add_null_ls_sources(nls.builtins.code_actions.gomodifytags, nls.builtins.code_actions.impl),
     utils.setup_formatters_by_ft("go", { "goimports" }),
+
     utils.setup_linters_by_ft("go", { "golangcilint" }),
+    -- utils.setup_lspserver("golangci_lint_ls", {}),
 
     {
         "ray-x/go.nvim",

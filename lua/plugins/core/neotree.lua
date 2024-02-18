@@ -3,15 +3,25 @@ return {
     branch = "v3.x",
     keys = {
         { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "toggle neotree" },
+        { "<leader>B", "<cmd>Neotree float buffers<cr>", desc = "show buffers" },
     },
+    cmd = "Neotree",
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
         "MunifTanjim/nui.nvim",
-        -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+        "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     },
     opts = {
-        -- open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
+        window = {
+            mappings = {
+                ["<space>"] = "noop",
+                ["s"] = "noop",
+                ["S"] = "noop",
+            },
+        },
+        sources = { "filesystem", "buffers", "git_status", "document_symbols" },
+        open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
         filesystem = {
             follow_current_file = {
                 enabled = true,
@@ -60,4 +70,14 @@ return {
             },
         },
     },
+    config = function(_, opts)
+        require("neo-tree").setup(opts)
+        vim.api.nvim_create_autocmd("TermClose", {
+            callback = function()
+                if package.loaded["neo-tree.sources.git_status"] then
+                    require("neo-tree.sources.git_status").refresh()
+                end
+            end,
+        })
+    end,
 }

@@ -1,8 +1,4 @@
-local live_grep = function()
-    print(vim.opt.ignorecase)
-end
-
-local p = {
+return {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     dependencies = {
@@ -76,13 +72,10 @@ local p = {
             desc = "grep word in whole project",
         },
     },
+    config = function(_, opts)
+        local telescope = require "telescope"
+        telescope.setup(opts)
+        telescope.load_extension "fzf"
+        telescope.load_extension "live_grep_args"
+    end,
 }
-
-function p.config()
-    local telescope = require "telescope"
-    telescope.setup(p.opts)
-    telescope.load_extension "fzf"
-    telescope.load_extension "live_grep_args"
-end
-
-return p

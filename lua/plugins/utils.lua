@@ -11,15 +11,15 @@ function M.mason_ensure_install(...)
     }
 end
 
----@param settings? table|function
-function M.setup_lspserver(name, settings)
+---@param options? table|function
+function M.setup_lspserver(name, options)
     local opts = {
         servers = {},
     }
-    if type(settings) == "function" then
-        opts.servers[name] = settings()
+    if type(options) == "function" then
+        opts.servers[name] = options()
     else
-        opts.servers[name] = settings
+        opts.servers[name] = options
     end
 
     return {

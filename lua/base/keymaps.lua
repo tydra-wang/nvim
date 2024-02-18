@@ -40,7 +40,7 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "prev diagnostic" }
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next diagnostic" })
 
 -- move cursor in insert mode
-vim.keymap.set("i", "<C-a>", "<Home>")
+vim.keymap.set("i", "<C-a>", "<ESC>^i")
 vim.keymap.set("i", "<C-e>", "<End>")
 vim.keymap.set("i", "<C-h>", "<Left>")
 vim.keymap.set("i", "<C-l>", "<Right>")
