@@ -53,6 +53,12 @@ vim.keymap.set("i", "<C-l>", "<Right>")
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 
+-- use register _ in some cases
+vim.keymap.set("n", "c", '"_c', { noremap = true })
+vim.keymap.set("x", "c", '"_c', { noremap = true })
+-- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text
+vim.keymap.set("x", "p", '"_dP', { noremap = true })
+
 -- add undo break-points
 vim.keymap.set("i", ",", ",<c-g>u")
 vim.keymap.set("i", ".", ".<c-g>u")
