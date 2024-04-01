@@ -1,7 +1,7 @@
 --  references:
 --  https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 
-local augroup = vim.api.nvim_create_augroup("wang_base", { clear = true })
+local augroup = vim.api.nvim_create_augroup("tydra-wang", { clear = true })
 local autocmd = function(events, options)
     options.group = augroup
     vim.api.nvim_create_autocmd(events, options)
@@ -26,21 +26,34 @@ autocmd("FileType", {
 })
 
 -- highlight on yank
-vim.api.nvim_create_autocmd("TextYankPost", {
+autocmd("TextYankPost", {
     callback = function()
         vim.highlight.on_yank()
     end,
 })
 
 -- check if we need to reload the file when it changed
-vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
-    command = "checktime",
+autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+    callback = function()
+        if vim.o.buftype ~= "nofile" then
+            vim.cmd "checktime"
+        end
+    end,
 })
 
--- open a file from its last left off position
+-- go to last loc when opening a buffer
 autocmd("BufReadPost", {
-    callback = function()
-        vim.cmd [[ if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif ]]
+    callback = function(event)
+        local exclude = { "gitcommit" }
+        local buf = event.buf
+        if vim.tbl_contains(exclude, vim.bo[buf].filetype) then
+            return
+        end
+        local mark = vim.api.nvim_buf_get_mark(buf, '"')
+        local lcount = vim.api.nvim_buf_line_count(buf)
+        if mark[1] > 0 and mark[1] <= lcount then
+            pcall(vim.api.nvim_win_set_cursor, 0, mark)
+        end
     end,
 })
 
@@ -56,9 +69,13 @@ autocmd("RecordingLeave", {
     end,
 })
 
--- use q to close help/qf windows
+-- close some filetypes with <q>
 autocmd("FileType", {
-    pattern = { "qf", "help" },
+    pattern = {
+        "help",
+        "qf",
+        "checkhealth",
+    },
     callback = function(event)
         vim.bo[event.buf].buflisted = false
         vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })

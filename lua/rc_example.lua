@@ -1,17 +1,21 @@
-require("wang").setup {
-    -- add lazy.nvim plugin specs
+-- vim.opt.relativenumber = false
+
+return {
     spec = {
-        -- use "ls -l lua/plugins/lang" to see all supported languages
         -- install all language plugins
-        -- { import = "plugins.lang" },
-        -- install only golang plugins
+        { import = "plugins.lang" },
+        -- install specific language plugin
         -- { import = "plugins.lang.go" },
 
-        -- use "ls -l lua/plugins/theme" to see all supported themes
         -- install all themes
-        -- { import = "plugins.theme" },
+        { import = "plugins.theme" },
+        -- install specific theme plugin
+        -- { import = "plugins.theme.solarized" },
 
-        -- add extra plugins
+        { import = "plugins.extra.leetcode" },
+        { import = "plugins.extra.noice" },
+
+        -- custom plugins
         -- {
         --     "akinsho/bufferline.nvim",
         --     version = "*",
@@ -24,8 +28,5 @@ require("wang").setup {
         -- },
     },
 
-    -- colorscheme = "tokyonight",
+    colorscheme = "tokyonight",
 }
-
--- overwrite some options
--- vim.opt.relativenumber = false

@@ -1,5 +1,6 @@
 local utils = require "plugins.utils"
 -- local nls = require "null-ls"
+-- vim.fn.setenv("GOOS", "linux")
 
 return {
     utils.telescope_ignore_pattern("go.sum", "vendor/.*", "/opt/homebrew/Cellar/go/.*"),
@@ -18,12 +19,17 @@ return {
         "ray-x/go.nvim",
         -- optional = true,
         ft = { "go", "gomod" },
-        opts = { tag_transform = "camelcase" },
+        opts = {
+            tag_transform = "camelcase",
+            diagnostic = false, -- avoid conflict with custom diagnostic config
+            -- max_line_len = 256,
+        },
         dependencies = { "ray-x/guihua.lua" },
     },
 
     {
         "nvim-neotest/neotest",
+        enabled = false,
         dependencies = {
             "nvim-neotest/neotest-go",
         },

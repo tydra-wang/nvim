@@ -88,19 +88,7 @@ return {
 
     { "akinsho/git-conflict.nvim", version = "*", config = true },
 
-    {
-        "sindrets/diffview.nvim",
-        cmd = { "DiffviewOpen" },
-    },
+    { "sindrets/diffview.nvim", cmd = { "DiffviewOpen" } },
 
-    {
-        "NeogitOrg/neogit",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim",
-            "sindrets/diffview.nvim",
-        },
-        cmd = { "Neogit" },
-        config = true,
-    },
+    { "NeogitOrg/neogit", cmd = { "Neogit" }, config = true },
 }

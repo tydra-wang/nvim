@@ -52,30 +52,29 @@ return {
         version = false, -- last release is way too old
         event = "InsertEnter",
         dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-cmdline",
-            "hrsh7th/cmp-nvim-lua",
-            "saadparwaiz1/cmp_luasnip",
+            -- sources
+            {
+                "hrsh7th/cmp-nvim-lsp",
+                "hrsh7th/cmp-buffer",
+                "hrsh7th/cmp-path",
+                "hrsh7th/cmp-cmdline",
+                "hrsh7th/cmp-nvim-lua",
+            },
             -- icons
             "onsails/lspkind.nvim",
-            -- function signature
-            -- {
-            --     "ray-x/lsp_signature.nvim",
-            --     opts = {
-            --         hint_enable = false,
-            --     },
-            -- },
+            -- lsp signature
+            {
+                "ray-x/lsp_signature.nvim",
+                enabled = false,
+                opts = {
+                    hint_enable = false,
+                },
+            },
         },
-        config = function()
-            vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
+        opts = function()
             local cmp = require "cmp"
             local defaults = require "cmp.config.default"()
-            local opts = {
-                -- completion = {
-                --     completeopt = "menu,menuone,noinsert",
-                -- },
+            return {
                 snippet = {
                     expand = function(args)
                         require("luasnip").lsp_expand(args.body)
@@ -87,17 +86,13 @@ return {
                     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-c>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-                    ["<S-CR>"] = cmp.mapping.confirm {
-                        behavior = cmp.ConfirmBehavior.Replace,
-                        select = true,
-                    }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                    ["<CR>"] = cmp.mapping.confirm { select = true },
+                    ["<S-CR>"] = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = true },
                 },
                 window = {
                     completion = cmp.config.window.bordered(),
                     documentation = cmp.config.window.bordered(),
                 },
-                -- preselect = "none",
                 sources = cmp.config.sources {
                     { name = "nvim_lsp" },
                     { name = "luasnip" },
@@ -108,46 +103,33 @@ return {
                 formatting = {
                     format = require("lspkind").cmp_format {},
                 },
-                experimental = {
-                    ghost_text = {
-                        hl_group = "LspCodeLens",
-                    },
-                },
                 sorting = defaults.sorting,
             }
+        end,
+        config = function(_, opts)
+            local cmp = require "cmp"
             cmp.setup(opts)
 
-            -- Set configuration for specific filetype.
-            cmp.setup.filetype("gitcommit", {
-                sources = cmp.config.sources({
-                    { name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
-                }, {
-                    { name = "buffer" },
-                }),
-            })
-
-            -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-            cmp.setup.cmdline({ "/", "?" }, {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = {
-                    { name = "buffer" },
-                },
-            })
-
-            -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-            cmp.setup.cmdline(":", {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = cmp.config.sources({
-                    { name = "path" },
-                }, {
-                    {
-                        name = "cmdline",
-                        option = {
-                            ignore_cmds = { "Man", "!" },
-                        },
-                    },
-                }),
-            })
+            -- cmp.setup.cmdline({ "/", "?" }, {
+            --     mapping = cmp.mapping.preset.cmdline(),
+            --     sources = {
+            --         { name = "buffer" },
+            --     },
+            -- })
+            --
+            -- cmp.setup.cmdline(":", {
+            --     mapping = cmp.mapping.preset.cmdline(),
+            --     sources = cmp.config.sources({
+            --         { name = "path" },
+            --     }, {
+            --         {
+            --             name = "cmdline",
+            --             option = {
+            --                 ignore_cmds = { "Man", "!" },
+            --             },
+            --         },
+            --     }),
+            -- })
         end,
     },
 }

@@ -3,16 +3,21 @@ return {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
         event = { "BufReadPost", "BufNewFile" },
-        config = function()
-            require("nvim-treesitter.configs").setup {
-                highlight = {
-                    enable = true,
-                },
-                indent = {
-                    enable = true,
-                },
-            }
-
+        opts = {
+            highlight = {
+                enable = true,
+            },
+            indent = {
+                enable = true,
+            },
+            ensure_installed = {
+                "vim",
+                "gitcommit",
+                "diff",
+            },
+        },
+        config = function(_, opts)
+            require("nvim-treesitter.configs").setup(opts)
             -- -- enable folding
             -- vim.opt.foldmethod = "expr"
             -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"

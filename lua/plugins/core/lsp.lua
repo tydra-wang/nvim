@@ -2,7 +2,6 @@ return {
     -- cmdline tools and lsp servers
     {
         "williamboman/mason.nvim",
-        cmd = { "Mason", "MasonInstall" },
         opts = {
             ensure_installed = {
                 "codespell",
@@ -85,16 +84,16 @@ return {
                     -- use 'copen' instead of 'botright copen'
                     local function on_list(options)
                         -- See https://github.com/neovim/neovim/blob/11e8e14628413e45e46d2d2a7af53d0da0c9dcdd/runtime/lua/vim/lsp/handlers.lua#L440
-                        vim.fn.setqflist({}, " ", options)
-                        if #options.items == 1 then
+                        if client and #options.items == 1 then
                             require("vim.lsp.util").jump_to_location(
                                 quickfix_to_location(options.items[1]),
                                 client.offset_encoding
                             )
                         else
-                            vim.api.nvim_command "cclose"
-                            vim.api.nvim_command "lclose"
-                            vim.api.nvim_command "copen"
+                            vim.fn.setqflist({}, " ", options)
+                            vim.cmd "cclose"
+                            vim.cmd "lclose"
+                            vim.cmd "copen"
                         end
                     end
 
@@ -113,7 +112,9 @@ return {
                     end, { desc = "lsp references" })
 
                     -- map("n", "gD", vim.lsp.buf.declaration, { desc = "lsp declaration" })
-                    map("n", "gd", vim.lsp.buf.definition, { desc = "lsp definition" })
+                    map("n", "gd", function()
+                        vim.lsp.buf.definition { on_list = on_list }
+                    end, { desc = "lsp definition" })
                     map("n", "K", vim.lsp.buf.hover, { desc = "lsp hover" })
                     map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "lsp code action" })
                     map("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "signature help" })
@@ -131,20 +132,6 @@ return {
                 require("lspconfig")[server].setup(server_opts)
             end
         end,
-    },
-
-    -- null-ls
-    {
-        "jose-elias-alvarez/null-ls.nvim",
-        event = { "BufReadPost", "BufNewFile" },
-        -- opts = function()
-        --     local nls = require "null-ls"
-        --     return {
-        --         sources = {
-        --             -- nls.builtins.diagnostics.codespell,
-        --         },
-        --     }
-        -- end,
     },
 
     {
@@ -207,7 +194,9 @@ return {
         config = function(_, opts)
             local lint = require "lint"
             lint.linters_by_ft = opts.linters_by_ft or {}
-            vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+            local codespell = lint.linters.codespell
+            codespell.args = { "--config", vim.fn.stdpath "config" .. "/.codespellrc" }
+            vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "BufWritePost", "BufEnter" }, {
                 group = vim.api.nvim_create_augroup("lint", { clear = true }),
                 callback = function()
                     lint.try_lint()

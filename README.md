@@ -6,3 +6,6 @@ cd ~/.config/nvim
 cp init-example.lua init.lua
 ```
 
+TODO:
+
+- diffview for current file saved version

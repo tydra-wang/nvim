@@ -28,8 +28,8 @@ return {
                         checkThirdParty = false,
                         library = {
                             -- Make the server aware of Neovim runtime files
-                            vim.fn.expand "$VIMRUNTIME/lua",
-                            vim.fn.stdpath "config" .. "/lua",
+                            [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+                            [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
                         },
                     },
                 },
