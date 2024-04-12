@@ -18,6 +18,7 @@ return {
                 ["<space>"] = "noop",
                 ["s"] = "noop",
                 ["S"] = "noop",
+                ["z"] = "noop",
             },
         },
         sources = { "filesystem", "buffers", "git_status", "document_symbols" },
