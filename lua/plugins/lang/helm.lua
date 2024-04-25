@@ -1,7 +1,7 @@
--- vim.filetype.add {
---     pattern = {
---         [".*/example%-dir/.*%.yaml"] = "helm",
---     },
--- }
+vim.filetype.add {
+    pattern = {
+        [".*/templates/.*%.yaml"] = "helm",
+    },
+}
 
-return { "towolf/vim-helm", ft = "helm" }
+return {}
