@@ -39,6 +39,7 @@ return {
             },
         },
         config = function(_, opts)
+            require("lspconfig.ui.windows").default_options.border = "single"
             -- custom commands
             vim.api.nvim_create_user_command("LspRename", function()
                 vim.lsp.buf.rename()

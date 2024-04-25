@@ -10,11 +10,12 @@ return {
             indent = {
                 enable = true,
             },
-            ensure_installed = {
-                "vim",
-                "gitcommit",
-                "diff",
-            },
+            auto_install = true,
+            -- ensure_installed = {
+            --     "vim",
+            --     "gitcommit",
+            --     "diff",
+            -- },
         },
         config = function(_, opts)
             require("nvim-treesitter.configs").setup(opts)
