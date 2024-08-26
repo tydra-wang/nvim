@@ -5,47 +5,6 @@ return {
         event = "InsertEnter",
     },
 
-    -- snippets
-    {
-        "L3MON4D3/LuaSnip",
-        build = "make install_jsregexp",
-        dependencies = {
-            "rafamadriz/friendly-snippets",
-            config = function()
-                require("luasnip.loaders.from_vscode").lazy_load()
-            end,
-        },
-        opts = {
-            history = true,
-            delete_check_events = "TextChanged",
-        },
-        keys = {
-            {
-                "<tab>",
-                function()
-                    return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-                end,
-                expr = true,
-                silent = true,
-                mode = "i",
-            },
-            {
-                "<tab>",
-                function()
-                    require("luasnip").jump(1)
-                end,
-                mode = "s",
-            },
-            {
-                "<s-tab>",
-                function()
-                    require("luasnip").jump(-1)
-                end,
-                mode = { "i", "s" },
-            },
-        },
-    },
-
     -- auto completion
     {
         "hrsh7th/nvim-cmp",
@@ -57,19 +16,13 @@ return {
                 "hrsh7th/cmp-nvim-lsp",
                 "hrsh7th/cmp-buffer",
                 "hrsh7th/cmp-path",
-                "hrsh7th/cmp-cmdline",
+                -- "hrsh7th/cmp-cmdline",
                 "hrsh7th/cmp-nvim-lua",
             },
             -- icons
             "onsails/lspkind.nvim",
-            -- lsp signature
-            {
-                "ray-x/lsp_signature.nvim",
-                enabled = false,
-                opts = {
-                    hint_enable = false,
-                },
-            },
+            "dcampos/cmp-snippy",
+            "dcampos/nvim-snippy",
         },
         opts = function()
             local cmp = require "cmp"
@@ -77,7 +30,7 @@ return {
             return {
                 snippet = {
                     expand = function(args)
-                        require("luasnip").lsp_expand(args.body)
+                        require("snippy").expand_snippet(args.body)
                     end,
                 },
                 mapping = cmp.mapping.preset.insert {
@@ -99,6 +52,7 @@ return {
                     { name = "buffer" },
                     { name = "path" },
                     { name = "nvim_lua" },
+                    { name = "snippy" },
                 },
                 formatting = {
                     format = require("lspkind").cmp_format {},
