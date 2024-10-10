@@ -35,10 +35,6 @@ end
 vim.keymap.set("n", "]q", next_issue, { noremap = true, silent = true, desc = "next locallist/quickfix item" })
 vim.keymap.set("n", "[q", prev_issue, { noremap = true, silent = true, desc = "prev locallist/quickfix item" })
 
--- switch between diagnostics
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "prev diagnostic" })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "next diagnostic" })
-
 -- move cursor in insert mode
 vim.keymap.set("i", "<C-a>", "<ESC>^i")
 vim.keymap.set("i", "<C-e>", "<End>")

@@ -1,13 +1,9 @@
 return {
-    {
-        "echasnovski/mini.pairs",
-        config = true,
-        event = "InsertEnter",
-    },
-
     -- auto completion
     {
+        -- "yioneko/nvim-cmp",
         "hrsh7th/nvim-cmp",
+        -- enabled = false,
         version = false, -- last release is way too old
         event = "InsertEnter",
         dependencies = {

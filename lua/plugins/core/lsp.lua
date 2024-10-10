@@ -1,36 +1,35 @@
 return {
     -- cmdline tools and lsp servers
     {
+
         "williamboman/mason.nvim",
+        cmd = "Mason",
+        build = ":MasonUpdate",
+        opts_extend = { "ensure_installed" },
         opts = {
             ensure_installed = {
-                "codespell",
+                "stylua",
+                "shfmt",
             },
         },
         config = function(_, opts)
             require("mason").setup(opts)
             local mr = require "mason-registry"
-            local function ensure_installed()
+            mr.refresh(function()
                 for _, tool in ipairs(opts.ensure_installed) do
                     local p = mr.get_package(tool)
                     if not p:is_installed() then
-                        print("Mason installing", tool)
                         p:install()
                     end
                 end
-            end
-            if mr.refresh then
-                mr.refresh(ensure_installed)
-            else
-                ensure_installed()
-            end
+            end)
         end,
     },
 
     -- lspconfig
     {
         "neovim/nvim-lspconfig",
-        event = "VeryLazy",
+        -- event = "VeryLazy",
         dependencies = "williamboman/mason.nvim",
         opts = {
             -- server settings
@@ -39,7 +38,6 @@ return {
             },
         },
         config = function(_, opts)
-            require("lspconfig.ui.windows").default_options.border = "single"
             -- custom commands
             vim.api.nvim_create_user_command("LspRename", function()
                 vim.lsp.buf.rename()
@@ -116,17 +114,20 @@ return {
                     map("n", "gd", function()
                         vim.lsp.buf.definition { on_list = on_list }
                     end, { desc = "lsp definition" })
-                    map("n", "K", vim.lsp.buf.hover, { desc = "lsp hover" })
                     map("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "lsp code action" })
                     map("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "signature help" })
                 end,
             })
 
-            local capabilities = vim.tbl_deep_extend(
-                "force",
-                vim.lsp.protocol.make_client_capabilities(),
-                require("cmp_nvim_lsp").default_capabilities()
-            )
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            local cmp_installed, cmp = pcall(require, "cmp_nvim_lsp")
+            if cmp_installed then
+                capabilities = vim.tbl_deep_extend("force", capabilities, cmp.default_capabilities())
+            end
+            local coq_installed, coq = pcall(require, "coq")
+            if coq_installed then
+                capabilities = coq.lsp_ensure_capabilities(capabilities)
+            end
 
             for server, server_opts in pairs(opts.servers) do
                 server_opts.capabilities = capabilities
@@ -162,48 +163,66 @@ return {
         "stevearc/conform.nvim",
         event = "VeryLazy",
         config = function(_, opts)
+            opts.format_on_save = function(bufnr)
+                -- Enable autoformat on certain filetypes
+                local filetypes = opts.autoformat_filetypes or {}
+                if not vim.tbl_contains(filetypes, vim.bo[bufnr].filetype) then
+                    return
+                end
+                -- Disable with a global or buffer-local variable
+                if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+                    return
+                end
+                -- Only enable autoformat for files under home
+                -- local current_file_path = vim.fn.resolve(vim.fn.expand "%:p")
+                -- local home = os.getenv "HOME"
+                -- if not home or current_file_path:sub(1, #home) ~= home then
+                --     return
+                -- end
+                return { timeout_ms = 500, lsp_fallback = true }
+            end
+
             require("conform").setup(opts)
-            local format_on_save = true
-            local toggle_format_on_save = function()
-                format_on_save = not format_on_save
-            end
-            local format_file = function(bufnr)
-                require("conform").format {
-                    bufnr = bufnr,
-                    lsp_fallback = true,
-                }
-            end
-            vim.api.nvim_create_user_command("Format", function()
-                format_file()
-            end, {})
-            vim.api.nvim_create_user_command("FormatOnSaveToggle", function()
-                toggle_format_on_save()
-            end, {})
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                pattern = "*",
-                callback = function(args)
-                    if format_on_save then
-                        format_file(args.bufnr)
-                    end
-                end,
-            })
         end,
     },
+
     {
         "mfussenegger/nvim-lint",
+        enabled = false,
         event = "VeryLazy",
         config = function(_, opts)
             local lint = require "lint"
             lint.linters_by_ft = opts.linters_by_ft or {}
             local codespell = lint.linters.codespell
             codespell.args = { "--config", vim.fn.stdpath "config" .. "/.codespellrc" }
-            vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "BufWritePost", "BufEnter" }, {
+            -- vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "BufWritePost", "BufEnter" }, {
+            vim.api.nvim_create_autocmd({ "BufWritePost" }, {
                 group = vim.api.nvim_create_augroup("lint", { clear = true }),
                 callback = function()
                     lint.try_lint()
-                    lint.try_lint "codespell"
+                    -- lint.try_lint "codespell"
                 end,
             })
+        end,
+    },
+
+    {
+        "nvimtools/none-ls.nvim",
+        dependencies = { "mason.nvim" },
+        -- enabled = false,
+        opts = {
+            -- debug = true,
+        },
+        config = function(_, opts)
+            opts = opts or {}
+            opts.sources = opts.sources or {}
+            local null_ls = require "null-ls"
+            vim.list_extend(opts.sources, {
+                null_ls.builtins.diagnostics.codespell.with {
+                    extra_args = { "--config", vim.fn.stdpath "config" .. "/.codespellrc" },
+                },
+            })
+            null_ls.setup(opts)
         end,
     },
 }

@@ -2,6 +2,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
+        -- enabled = false,
         event = { "BufReadPost", "BufNewFile" },
         opts = {
             highlight = {

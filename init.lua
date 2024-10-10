@@ -1,9 +1,11 @@
+vim.uv = vim.uv or vim.loop
+
 -- raw neovim settings without any plugins
 require "base"
 
 -- install lazy.nvim
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system {
         "git",
         "clone",
@@ -30,6 +32,12 @@ local lazy_opts = {
     },
     ui = {
         border = "single",
+    },
+    git = {
+        -- defaults for `Lazy log`
+        -- log = { "-10" }, -- last 10 commits
+        -- log = { "--since=1 days ago" }, -- commits from the last 3 days
+        timeout = 1200, -- processes taking over 2 minutes will be killed
     },
 }
 

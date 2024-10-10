@@ -31,7 +31,7 @@ end
 function M.add_null_ls_sources(...)
     local sources = { ... }
     return {
-        "jose-elias-alvarez/null-ls.nvim",
+        "none-ls.nvim",
         opts = function(_, opts)
             opts.sources = opts.sources or {}
             vim.list_extend(opts.sources, sources)
@@ -47,6 +47,17 @@ function M.setup_formatters_by_ft(filetype, formatters)
                 [filetype] = formatters,
             },
         },
+    }
+end
+
+function M.enable_autoformat_for_ft(...)
+    local filetypes = { ... }
+    return {
+        "stevearc/conform.nvim",
+        opts = function(_, opts)
+            opts.autoformat_filetypes = opts.autoformat_filetypes or {}
+            vim.list_extend(opts.autoformat_filetypes, filetypes)
+        end,
     }
 end
 
