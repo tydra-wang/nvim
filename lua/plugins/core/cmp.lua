@@ -1,34 +1,21 @@
 return {
     -- auto completion
     {
-        -- "yioneko/nvim-cmp",
         "hrsh7th/nvim-cmp",
-        -- enabled = false,
-        version = false, -- last release is way too old
         event = "InsertEnter",
         dependencies = {
-            -- sources
-            {
-                "hrsh7th/cmp-nvim-lsp",
-                "hrsh7th/cmp-buffer",
-                "hrsh7th/cmp-path",
-                -- "hrsh7th/cmp-cmdline",
-                "hrsh7th/cmp-nvim-lua",
-            },
-            -- icons
-            "onsails/lspkind.nvim",
-            "dcampos/cmp-snippy",
-            "dcampos/nvim-snippy",
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-nvim-lua",
         },
         opts = function()
             local cmp = require "cmp"
             local defaults = require "cmp.config.default"()
             return {
-                snippet = {
-                    expand = function(args)
-                        require("snippy").expand_snippet(args.body)
-                    end,
-                },
+                -- completion = {
+                --     completeopt = "menu,menuone,noinsert,preview",
+                -- },
                 mapping = cmp.mapping.preset.insert {
                     ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
                     ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
@@ -44,42 +31,91 @@ return {
                 },
                 sources = cmp.config.sources {
                     { name = "nvim_lsp" },
-                    { name = "luasnip" },
                     { name = "buffer" },
                     { name = "path" },
                     { name = "nvim_lua" },
-                    { name = "snippy" },
-                },
-                formatting = {
-                    format = require("lspkind").cmp_format {},
                 },
                 sorting = defaults.sorting,
             }
         end,
-        config = function(_, opts)
-            local cmp = require "cmp"
-            cmp.setup(opts)
+    },
 
-            -- cmp.setup.cmdline({ "/", "?" }, {
-            --     mapping = cmp.mapping.preset.cmdline(),
-            --     sources = {
-            --         { name = "buffer" },
-            --     },
-            -- })
-            --
-            -- cmp.setup.cmdline(":", {
-            --     mapping = cmp.mapping.preset.cmdline(),
-            --     sources = cmp.config.sources({
-            --         { name = "path" },
-            --     }, {
-            --         {
-            --             name = "cmdline",
-            --             option = {
-            --                 ignore_cmds = { "Man", "!" },
-            --             },
-            --         },
-            --     }),
-            -- })
+    -- icons
+    {
+        "nvim-cmp",
+        dependencies = {
+            "onsails/lspkind.nvim",
+        },
+        opts = function(_, opts)
+            opts.formatting = {
+                format = require("lspkind").cmp_format {},
+            }
         end,
+    },
+
+    -- snippets
+    {
+        "nvim-cmp",
+        dependencies = {
+            {
+                "garymjr/nvim-snippets",
+                opts = {
+                    friendly_snippets = true,
+                },
+                dependencies = { "rafamadriz/friendly-snippets" },
+            },
+        },
+        opts = function(_, opts)
+            opts.snippet = {
+                expand = function(item)
+                    return vim.snippet.expand(item.body)
+                end,
+            }
+            table.insert(opts.sources, { name = "snippets" })
+        end,
+
+        keys = {
+            {
+                "<Tab>",
+                function()
+                    if vim.snippet.active { direction = 1 } then
+                        vim.schedule(function()
+                            vim.snippet.jump(1)
+                        end)
+                        return
+                    end
+                    return "<Tab>"
+                end,
+                expr = true,
+                silent = true,
+                mode = "i",
+            },
+            {
+                "<Tab>",
+                function()
+                    vim.schedule(function()
+                        vim.snippet.jump(1)
+                    end)
+                end,
+                expr = true,
+                silent = true,
+                mode = "s",
+            },
+            {
+                "<S-Tab>",
+                function()
+                    if vim.snippet.active { direction = -1 } then
+                        vim.schedule(function()
+                            vim.snippet.jump(-1)
+                        end)
+                        return
+                    end
+                    return "<S-Tab>"
+                end,
+                expr = true,
+                silent = true,
+                mode = { "i", "s" },
+            },
+        },
     },
 }

@@ -1,14 +1,12 @@
 return {
-    {
-        "nmac427/guess-indent.nvim",
-        event = "BufReadPre",
-        config = true,
-    },
+
+    { "karb94/neoscroll.nvim", event = "VeryLazy", config = true },
 
     {
         "lukas-reineke/indent-blankline.nvim",
         -- event = "VeryLazy",
         main = "ibl",
+        cond = false,
         opts = {
             indent = {
                 char = "│",
@@ -32,5 +30,20 @@ return {
                     or vim.b.ibl_enable
             end)
         end,
+    },
+
+    {
+        "numToStr/FTerm.nvim",
+        config = true,
+        cond = false,
+        keys = {
+            {
+                "<Leader>t",
+                function()
+                    require("FTerm").toggle()
+                end,
+                desc = "toggle float terminal",
+            },
+        },
     },
 }

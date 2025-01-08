@@ -43,8 +43,9 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
     keys = {
-        { "<leader>e", "<cmd>Neotree toggle<cr>", desc = "toggle neotree" },
-        { "<leader>B", "<cmd>Neotree float buffers<cr>", desc = "show buffers" },
+        { "<leader>E", "<cmd>Neotree toggle right<cr>", desc = "toggle neotree" },
+        { "<leader>b", "<cmd>Neotree float buffers<cr>", desc = "show buffers" },
+        { "<leader>e", "<cmd>Neotree toggle float filesystem<cr>", desc = "show buffers" },
     },
     cmd = "Neotree",
     dependencies = {
@@ -64,7 +65,7 @@ return {
             },
         },
         sources = { "filesystem", "buffers", "git_status", "document_symbols" },
-        open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
+        open_files_do_not_replace_types = { "terminal", "qf" },
         filesystem = {
             follow_current_file = {
                 enabled = true,

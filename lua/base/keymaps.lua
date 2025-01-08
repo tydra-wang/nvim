@@ -1,8 +1,9 @@
 vim.g.mapleader = " "
 
 vim.keymap.set("n", "<leader>w", "<cmd>w<cr><esc>", { desc = "save buffer" })
-vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "escape and clear hlsearch" })
-vim.keymap.set({ "n", "x" }, "gw", "*N", { desc = "search word under cursor" })
+vim.keymap.set({ "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "escape and clear hlsearch" })
+-- vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "escape and clear hlsearch" })
+-- vim.keymap.set({ "n", "x" }, "gw", "*N", { desc = "search word under cursor" })
 vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>", { desc = "enter normal mode" })
 
 -- switch between windows
@@ -14,26 +15,22 @@ vim.keymap.set("n", "<C-k>", "<C-w>k")
 -- switch between buffers
 vim.keymap.set("n", "<leader>n", "<C-6>", { desc = "last buffer" })
 
-local function next_issue()
+vim.keymap.set("n", "]q", function()
     local loclist_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
     if loclist_open then
         vim.cmd.lnext()
     else
         vim.cmd.cnext()
     end
-end
-
-local function prev_issue()
+end, { noremap = true, silent = true, desc = "next locallist/quickfix item" })
+vim.keymap.set("n", "[q", function()
     local loclist_open = vim.fn.getloclist(0, { winid = 0 }).winid ~= 0
     if loclist_open then
         vim.cmd.lprev()
     else
         vim.cmd.cprev()
     end
-end
-
-vim.keymap.set("n", "]q", next_issue, { noremap = true, silent = true, desc = "next locallist/quickfix item" })
-vim.keymap.set("n", "[q", prev_issue, { noremap = true, silent = true, desc = "prev locallist/quickfix item" })
+end, { noremap = true, silent = true, desc = "prev locallist/quickfix item" })
 
 -- move cursor in insert mode
 vim.keymap.set("i", "<C-a>", "<ESC>^i")

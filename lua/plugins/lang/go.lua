@@ -1,4 +1,5 @@
 local utils = require "plugins.utils"
+
 local golangci_lint = require("null-ls").builtins.diagnostics.golangci_lint.with {
     cwd = require("null-ls.helpers").cache.by_bufnr(function(params)
         -- make issues less by using current dir instead of project root
@@ -10,7 +11,7 @@ local gopls_settings = {
 }
 
 if os.getenv "GOOS" == nil then
-    if string.find(vim.fn.getcwd(), "csi") then
+    if string.find(vim.fn.getcwd(), "csi") or string.find(vim.fn.getcwd(), "kubernetes/kubernetes") then
         -- https://github.com/golang/tools/blob/0734f6249fc1deb2d8b2724f0e0548474c39f884/gopls/doc/workspace.md#when-to-manually-configure-goos-goarch-or--tags
         gopls_settings.env = { GOOS = "linux" }
         -- require("lint").linters.golangcilint.env = {
@@ -48,21 +49,5 @@ return {
             -- max_line_len = 256,
         },
         dependencies = { "ray-x/guihua.lua" },
-    },
-
-    {
-        "nvim-neotest/neotest",
-        enabled = false,
-        dependencies = {
-            "nvim-neotest/neotest-go",
-        },
-        opts = {
-            adapters = {
-                ["neotest-go"] = {
-                    -- Here we can set options for neotest-go, e.g.
-                    -- args = { "-tags=integration" }
-                },
-            },
-        },
     },
 }

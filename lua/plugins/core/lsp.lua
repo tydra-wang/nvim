@@ -36,6 +36,9 @@ return {
             servers = {
                 -- lua_ls = {},
             },
+            document_highlight = {
+                enabled = true,
+            },
         },
         config = function(_, opts)
             -- custom commands
@@ -138,6 +141,7 @@ return {
 
     {
         "RRethy/vim-illuminate",
+        cond = false,
         event = "VeryLazy",
         opts = {
             delay = 200,

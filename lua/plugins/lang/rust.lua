@@ -15,7 +15,6 @@ return {
                 },
             },
         },
-        ---@param opts cmp.ConfigSchema
         opts = function(_, opts)
             opts.sources = opts.sources or {}
             table.insert(opts.sources, { name = "crates" })
@@ -100,16 +99,6 @@ return {
                         },
                     },
                 },
-            },
-        },
-    },
-
-    {
-        "nvim-neotest/neotest",
-        optional = true,
-        opts = {
-            adapters = {
-                ["rustaceanvim.neotest"] = {},
             },
         },
     },

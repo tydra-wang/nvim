@@ -57,12 +57,12 @@ return {
             desc = "find symbols in buffer",
         },
         {
-            "<leader><leader>",
+            "<leader>r",
             "<cmd>Telescope oldfiles only_cwd=true<cr>",
             desc = "find recent files",
         },
         {
-            "<leader>b",
+            "<leader>B",
             "<cmd>Telescope buffers<cr>",
             desc = "find buffers",
         },

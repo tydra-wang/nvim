@@ -1,7 +1,7 @@
 --  references:
 --  https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 
-local augroup = vim.api.nvim_create_augroup("tydra-wang", { clear = true })
+local augroup = vim.api.nvim_create_augroup("base", { clear = true })
 local autocmd = function(events, options)
     options.group = augroup
     vim.api.nvim_create_autocmd(events, options)
@@ -46,9 +46,10 @@ autocmd("BufReadPost", {
     callback = function(event)
         local exclude = { "gitcommit" }
         local buf = event.buf
-        if vim.tbl_contains(exclude, vim.bo[buf].filetype) then
+        if vim.tbl_contains(exclude, vim.bo[buf].filetype) or vim.b[buf].lazyvim_last_loc then
             return
         end
+        vim.b[buf].lazyvim_last_loc = true
         local mark = vim.api.nvim_buf_get_mark(buf, '"')
         local lcount = vim.api.nvim_buf_line_count(buf)
         if mark[1] > 0 and mark[1] <= lcount then
@@ -71,46 +72,9 @@ autocmd("RecordingLeave", {
 
 -- close some filetypes with <q>
 autocmd("FileType", {
-    pattern = {
-        "help",
-        "qf",
-        "checkhealth",
-    },
+    pattern = { "help", "qf", "checkhealth" },
     callback = function(event)
         vim.bo[event.buf].buflisted = false
         vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
-    end,
-})
-
--- TODO: still too slow on large files
-
--- Set filetype to `bigfile` for files larger than 1.5 MB
--- Only vim syntax will be enabled (with the correct filetype)
--- LSP, treesitter and other ft plugins will be disabled.
--- mini.animate will also be disabled.
-vim.g.bigfile_size = 1024 * 1024 * 1.5 -- 1.5 MB
-
-vim.filetype.add {
-    pattern = {
-        [".*"] = {
-            function(path, buf)
-                return vim.bo[buf]
-                        and vim.bo[buf].filetype ~= "bigfile"
-                        and path
-                        and vim.fn.getfsize(path) > vim.g.bigfile_size
-                        and "bigfile"
-                    or nil
-            end,
-        },
-    },
-}
-
-autocmd({ "FileType" }, {
-    pattern = "bigfile",
-    callback = function(ev)
-        vim.b.minianimate_disable = true
-        vim.schedule(function()
-            vim.bo[ev.buf].syntax = vim.filetype.match { buf = ev.buf } or ""
-        end)
     end,
 })
