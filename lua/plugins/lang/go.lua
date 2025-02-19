@@ -1,3 +1,5 @@
+vim.g.EditorConfig_exclude_patterns = "/opt/homebrew/Cellar/go"
+
 local utils = require "plugins.utils"
 
 local golangci_lint = require("null-ls").builtins.diagnostics.golangci_lint.with {
@@ -22,7 +24,7 @@ if os.getenv "GOOS" == nil then
 end
 
 return {
-    utils.telescope_ignore_pattern("go.sum", "vendor/.*", "/opt/homebrew/Cellar/go/.*"),
+    -- utils.telescope_ignore_pattern("go.sum", "vendor/.*", "/opt/homebrew/Cellar/go/.*"),
     utils.mason_ensure_install("gopls", "goimports", "gofumpt", "golangci-lint-langserver", "gomodifytags", "impl"),
     utils.setup_lspserver("gopls", {
         -- See https://github.com/golang/tools/blob/master/gopls/doc/daemon.md

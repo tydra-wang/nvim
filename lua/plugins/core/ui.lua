@@ -31,9 +31,9 @@ return {
                 "quickfix",
                 "man",
                 "lazy",
-                "symbols-outline",
+                -- "symbols-outline",
                 -- "trouble",
-                "toggleterm",
+                -- "toggleterm",
             },
         },
         config = function(_, opts)

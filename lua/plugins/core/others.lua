@@ -3,6 +3,7 @@ return {
         "nmac427/guess-indent.nvim",
         event = "BufReadPre",
         config = true,
+        -- cond = false,
     },
 
     {

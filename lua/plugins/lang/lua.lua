@@ -5,36 +5,51 @@ return {
     utils.setup_formatters_by_ft("lua", { "stylua" }),
     utils.enable_autoformat_for_ft "lua",
 
-    utils.setup_lspserver("lua_ls", function()
-        -- copy from lsp-zero nvim_workspace settings
-        local runtime_path = vim.split(package.path, ";")
-        table.insert(runtime_path, "lua/?.lua")
-        table.insert(runtime_path, "lua/?/init.lua")
-        return {
-            settings = {
-                Lua = {
-                    -- Disable telemetry
-                    telemetry = { enable = false },
-                    runtime = {
-                        -- Tell the language server which version of Lua you're using
-                        -- (most likely LuaJIT in the case of Neovim)
-                        version = "LuaJIT",
-                        path = runtime_path,
-                    },
-                    diagnostics = {
-                        -- Get the language server to recognize the `vim` global
-                        globals = { "vim" },
-                    },
-                    workspace = {
-                        checkThirdParty = false,
-                        library = {
-                            -- Make the server aware of Neovim runtime files
-                            [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-                            [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-                        },
-                    },
-                },
+    -- utils.setup_lspserver("lua_ls", function()
+    --     -- copy from lsp-zero nvim_workspace settings
+    --     local runtime_path = vim.split(package.path, ";")
+    --     table.insert(runtime_path, "lua/?.lua")
+    --     table.insert(runtime_path, "lua/?/init.lua")
+    --     return {
+    --         settings = {
+    --             Lua = {
+    --                 -- Disable telemetry
+    --                 telemetry = { enable = false },
+    --                 runtime = {
+    --                     -- Tell the language server which version of Lua you're using
+    --                     -- (most likely LuaJIT in the case of Neovim)
+    --                     version = "LuaJIT",
+    --                     path = runtime_path,
+    --                 },
+    --                 diagnostics = {
+    --                     -- Get the language server to recognize the `vim` global
+    --                     globals = { "vim" },
+    --                 },
+    --                 workspace = {
+    --                     checkThirdParty = false,
+    --                     library = {
+    --                         -- Make the server aware of Neovim runtime files
+    --                         [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+    --                         [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+    --                     },
+    --                 },
+    --             },
+    --         },
+    --     }
+    -- end),
+
+    utils.setup_lspserver("lua_ls", {}),
+
+    {
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {
+            library = {
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+                { path = "LazyVim", words = { "LazyVim" } },
+                { path = "snacks.nvim", words = { "Snacks" } },
+                { path = "lazy.nvim", words = { "LazyVim" } },
             },
-        }
-    end),
+        },
+    },
 }

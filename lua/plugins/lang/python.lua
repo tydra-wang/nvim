@@ -10,8 +10,13 @@ return {
             pylsp = {
                 plugins = {
                     pycodestyle = {
-                        maxLineLength = 520,
+                        -- ignore = { "E302", "E305" },
+                        enabled = false,
+                        maxLineLength = 512,
                     },
+                    -- pylint = {
+                    --     enabled = false,
+                    -- },
                 },
             },
         },
