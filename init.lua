@@ -1,5 +1,3 @@
-vim.uv = vim.uv or vim.loop
-
 -- raw neovim settings without any plugins
 require "base"
 
@@ -35,7 +33,7 @@ local lazy_opts = {
     },
     git = {
         -- defaults for `Lazy log`
-        -- log = { "-10" }, -- last 10 commits
+        log = { "-10" }, -- last 10 commits
         -- log = { "--since=1 days ago" }, -- commits from the last 3 days
         timeout = 1200, -- processes taking over 2 minutes will be killed
     },
