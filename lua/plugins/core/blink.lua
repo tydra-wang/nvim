@@ -69,12 +69,14 @@ return {
                 -- with blink.compat
                 -- compat = {},
                 default = { "lsp", "path", "snippets", "buffer" },
-                cmdline = {}, -- disable cmdline
+            },
+
+            cmdline = {
+                enabled = false,
             },
 
             keymap = {
                 preset = "enter",
-                -- preset = "super-tab",
                 -- ["<C-y>"] = { "select_and_accept" },
             },
         },
