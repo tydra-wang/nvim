@@ -115,7 +115,7 @@ return {
                         vim.lsp.buf.references(nil, { on_list = on_list })
                     end, { desc = "lsp references" })
 
-                    -- map("n", "gD", vim.lsp.buf.declaration, { desc = "lsp declaration" })
+                    map("n", "gD", vim.lsp.buf.declaration, { desc = "lsp declaration" })
                     map("n", "gd", function()
                         vim.lsp.buf.definition { on_list = on_list }
                     end, { desc = "lsp definition" })

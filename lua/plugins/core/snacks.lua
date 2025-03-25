@@ -38,8 +38,8 @@ return {
             { "<leader>f", function() Snacks.picker.smart(picker_file_common_config) end, desc = "Smart find files", },
             { "<leader>/", function() Snacks.picker.grep { layout = { preview = false } } end, desc = "Find word", },
             { "<leader>Ff", function() Snacks.picker.files { layout = { preview = false } } end, desc = "Find files", },
-            { "<leader>Fr", function() Snacks.picker.recent(picker_file_common_config) end, desc = "Find recent files", },
-            { "<leader>Fs", function() Snacks.picker.lsp_symbols() end, desc = "Find lsp symbols", },
+            { "<leader>r", function() Snacks.picker.recent(picker_file_common_config) end, desc = "Find recent files", },
+            { "<leader>s", function() Snacks.picker.lsp_symbols() end, desc = "Find lsp symbols", },
 
             { "<leader>Gg", function() Snacks.lazygit() end, desc = "Lazygit", },
             { "<leader>Gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line", },
