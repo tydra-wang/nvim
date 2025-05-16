@@ -6,6 +6,7 @@ return {
     },
     {
         "saghen/blink.cmp",
+        -- cond = false,
         version = "*",
         -- build = "cargo build --release",
         opts_extend = {
@@ -78,7 +79,7 @@ return {
             keymap = {
                 preset = "super-tab",
                 -- preset = "default",
-                -- ["<C-y>"] = { "select_and_accept" },
+                ["<C-y>"] = { "select_and_accept" },
             },
         },
     },

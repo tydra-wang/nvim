@@ -25,6 +25,16 @@ local lazy_opts = {
     },
     spec = {
         { import = "plugins.core" },
+        -- { import = "plugins.core.lsp" },
+        -- { import = "plugins.core.neotree" },
+        -- { import = "plugins.core.snacks" },
+        -- { import = "plugins.core.blink" },
+        -- { import = "plugins.core.others" },
+        -- { import = "plugins.core.git" },
+        -- { import = "plugins.core.lualine" },
+        -- { import = "plugins.core.treesitter" },
+        -- { import = "plugins.core.quickfix" },
+        -- { import = "plugins.core.textobject" },
         -- default theme
         { import = "plugins.theme.catppuccin" },
     },

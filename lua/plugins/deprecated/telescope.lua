@@ -46,9 +46,9 @@ return {
         },
     },
     keys = {
-        -- { "<leader>f", "<cmd>Telescope find_files<cr>", desc = "find files" },
-        -- { "<leader>s", "<cmd>Telescope lsp_document_symbols symbol_width=60<cr>", desc = "find symbols in buffer" },
-        -- { "<leader>r", "<cmd>Telescope oldfiles only_cwd=true<cr>", desc = "find recent files" },
+        { "<leader>f", "<cmd>Telescope find_files<cr>", desc = "find files" },
+        { "<leader>s", "<cmd>Telescope lsp_document_symbols symbol_width=60<cr>", desc = "find symbols in buffer" },
+        { "<leader>r", "<cmd>Telescope oldfiles only_cwd=true<cr>", desc = "find recent files" },
         { "<leader>B", "<cmd>Telescope buffers<cr>", desc = "find buffers" },
         { "<leader>g", "<cmd>Telescope live_grep preview=true<cr>", desc = "grep word in whole project" },
     },

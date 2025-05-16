@@ -32,6 +32,13 @@ return {
             statuscolumn = { enabled = true },
             words = { enabled = true },
             gitbrowse = { enabled = false },
+            picker = {
+                formatters = {
+                    file = {
+                        truncate = 80,
+                    },
+                },
+            },
         },
         -- stylua: ignore
         keys = {
