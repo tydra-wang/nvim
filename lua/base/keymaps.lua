@@ -37,8 +37,8 @@ vim.keymap.set("i", "<C-a>", "<ESC>^i")
 vim.keymap.set("i", "<C-e>", "<End>")
 vim.keymap.set("i", "<C-h>", "<Left>")
 vim.keymap.set("i", "<C-l>", "<Right>")
--- vim.keymap.set("i", "<C-j>", "<Down>")
--- vim.keymap.set("i", "<C-k>", "<Up>")
+vim.keymap.set("i", "<C-j>", "<Down>")
+vim.keymap.set("i", "<C-k>", "<Up>")
 
 -- improve default behaviour of keys
 
@@ -60,3 +60,5 @@ vim.keymap.set("i", ";", ";<c-g>u")
 -- better indenting
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("v", ">", ">gv")
+
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "open diagnostics to qf" })

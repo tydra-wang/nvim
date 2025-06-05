@@ -5,6 +5,4 @@ vim.filetype.add {
     },
 }
 
--- treesitter for highlights
-
 return {}

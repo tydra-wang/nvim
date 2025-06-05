@@ -11,6 +11,7 @@ function M.mason_ensure_install(...)
     }
 end
 
+---@deprecated
 ---@param options? table|function
 function M.setup_lspserver(name, options)
     local opts = {
@@ -72,6 +73,7 @@ function M.setup_linters_by_ft(filetype, linters)
     }
 end
 
+---@deprecated
 function M.telescope_ignore_pattern(...)
     local patterns = { ... }
     return {
