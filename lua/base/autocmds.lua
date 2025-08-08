@@ -72,7 +72,7 @@ autocmd("RecordingLeave", {
 
 -- close some filetypes with <q>
 autocmd("FileType", {
-    pattern = { "help", "qf", "checkhealth" },
+    pattern = { "help", "qf", "checkhealth", "neotest-output-panel" },
     callback = function(event)
         vim.bo[event.buf].buflisted = false
         vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })

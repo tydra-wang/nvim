@@ -1,5 +1,16 @@
 return {
-    { "neovim/nvim-lspconfig" },
+    {
+        "neovim/nvim-lspconfig",
+        config = function()
+            vim.lsp.config("typos_lsp", {
+                init_options = {
+                    diagnosticSeverity = "Hint",
+                },
+            })
+
+            vim.lsp.enable "typos_lsp"
+        end,
+    },
 
     -- cmdline tools and lsp servers
     {
@@ -12,6 +23,7 @@ return {
             ensure_installed = {
                 "stylua",
                 "shfmt",
+                "typos-lsp",
             },
         },
         config = function(_, opts)
@@ -75,8 +87,8 @@ return {
             -- local codespell = lint.linters.codespell
             -- codespell.args = { "--config", vim.fn.stdpath "config" .. "/.codespellrc" }
 
-            -- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-            vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "BufWritePost", "BufEnter" }, {
+            -- vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged", "BufWritePost", "BufEnter" }, {
+            vim.api.nvim_create_autocmd({ "BufWritePost" }, {
                 group = vim.api.nvim_create_augroup("lint", { clear = true }),
                 callback = function()
                     lint.try_lint()

@@ -7,7 +7,7 @@ return {
     {
         "saghen/blink.cmp",
         -- cond = false,
-        version = "*",
+        version = "1.*",
         -- build = "cargo build --release",
         opts_extend = {
             "sources.completion.enabled_providers",
@@ -16,6 +16,7 @@ return {
         },
         dependencies = {
             "rafamadriz/friendly-snippets",
+            "Kaiser-Yang/blink-cmp-dictionary",
             -- add blink.compat to dependencies
             -- {
             --     "saghen/blink.compat",
@@ -33,24 +34,25 @@ return {
                 -- sets the fallback highlight groups to nvim-cmp's highlight groups
                 -- useful for when your theme doesn't support blink.cmp
                 -- will be removed in a future release, assuming themes add support
-                use_nvim_cmp_as_default = false,
+                -- use_nvim_cmp_as_default = false,
+
                 -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
                 -- adjusts spacing to ensure icons are aligned
-                nerd_font_variant = "mono",
+                -- nerd_font_variant = "mono",
             },
             completion = {
-                accept = {
-                    -- experimental auto-brackets support
-                    auto_brackets = {
-                        enabled = true,
-                    },
-                },
-                menu = {
-                    draw = { treesitter = { "lsp" } },
-                    border = "single",
-                },
+                -- accept = {
+                --     -- experimental auto-brackets support
+                --     auto_brackets = {
+                --         enabled = true,
+                --     },
+                -- },
+                -- menu = {
+                --     draw = { treesitter = { "lsp" } },
+                -- border = "single",
+                -- },
                 documentation = {
-                    window = { border = "single" },
+                    -- window = { border = "single" },
                     auto_show = true,
                     auto_show_delay_ms = 200,
                 },
@@ -61,25 +63,29 @@ return {
 
             -- experimental signature help support
             signature = {
-                -- enabled = true,
-                window = { border = "single" },
+                enabled = true,
+                -- window = { border = "single" },
             },
 
             sources = {
-                -- adding any nvim-cmp sources here will enable them
-                -- with blink.compat
-                -- compat = {},
-                default = { "lsp", "path", "snippets", "buffer" },
+                default = { "lsp", "path", "snippets", "buffer", "dictionary" },
+                providers = {
+                    dictionary = {
+                        module = "blink-cmp-dictionary",
+                        min_keyword_length = 3,
+                    },
+                },
             },
+            fuzzy = { implementation = "prefer_rust" },
 
-            cmdline = {
-                enabled = false,
-            },
+            -- cmdline = {
+            --     enabled = false,
+            -- },
 
             keymap = {
                 preset = "super-tab",
                 -- preset = "default",
-                ["<C-y>"] = { "select_and_accept" },
+                -- ["<C-y>"] = { "select_and_accept" },
             },
         },
     },

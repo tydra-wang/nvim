@@ -24,3 +24,5 @@ opt.cmdheight = 0
 -- workaround: echo "root = true" > /opt/homebrew/Cellar/.editorconfig
 -- https://neovim.io/doc/user/editorconfig.html
 -- vim.g.editorconfig = false
+
+vim.o.winborder = "single"
